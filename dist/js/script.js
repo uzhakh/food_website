@@ -87,6 +87,44 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
   setClock('.timer', deadline);
+
+  //Modal
+  const modalTrigger = document.querySelectorAll('[data-modal]'),
+    modal = document.querySelector('.modal'),
+    modalCloseBtn = document.querySelector('[data-close]');
+  modalTrigger.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // const modal = document.querySelector('.modal');
+      // modal.classList.add('show'); //another way to show/ close modal
+      // modal.classList.remove('hide');
+      modal.classList.toggle('show');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  function closeModal() {
+    modal.classList.toggle('show');
+    document.body.style.overflow = '';
+  }
+  ;
+  modalCloseBtn.addEventListener('click', () => {
+    // const modal = document.querySelector('.modal');
+    // modal.classList.add('hide'); //another way to show/ close modal
+    // modal.classList.remove('show');
+    closeModal; //не вызываем, а просто передаем
+  });
+
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      // const modal = document.querySelector('.modal');
+      closeModal(); //вызываем, потому что если условие то она должна запуститься
+    }
+    ;
+  });
+  document.addEventListener('keydown', e => {
+    if (e.code === "Escape" && modal.classList.contains('show')) {
+      closeModal();
+    }
+  });
 });
 /******/ })()
 ;
