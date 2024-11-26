@@ -148,4 +148,69 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', showModalByScroll);
+
+    //Используем классы для карточек
+
+    class MenuCard {
+        constructor(src, alt, title, descr, price, parentSelector) {
+          this.src = src;
+          this.alt = alt;
+          this.title = title;
+          this.descr = descr;
+          this.price = price;
+          this.parent = document.querySelector(parentSelector);
+          this.transfer = 90;
+          // this.changeToRUB();
+        }
+  
+        // changeToRUB() {
+        //   this.price = this.price * this.transfer;
+        // }
+  
+        render() {
+          const element = document.createElement('div');
+          element.innerHTML = `  <div class="menu__item">
+              <img src=${this.src} alt=${this.alt} />
+              <h3 class="menu__item-subtitle">${this.title}</h3>
+              <div class="menu__item-descr">
+              ${this.descr}
+              </div>
+              <div class="menu__item-divider"></div>
+              <div class="menu__item-price">
+                <div class="menu__item-cost">Price:</div>
+                <div class="menu__item-total"><span>${this.price}</span> $/day</div>
+              </div>
+            </div>
+            `;
+            this.parent.append(element);
+        }
+      }
+  
+      new MenuCard(
+        "img/tabs/vegy.jpg",
+        "vegy",
+        'Menu "Fitness"',
+        '  The menu "Fitness" is a new approach to food preparation: more fresh fruit and vegetables. The product of active and healthy people. This is absolutely new product with optimal price and high quality!',
+        5.99,
+        '.menu .container'
+      ).render();
+  
+      new MenuCard(
+        "img/tabs/elite.jpg",
+        "elite",
+        'Menu "Premium"',
+        'In the "Premium" menu we use not only beautiful packaging design,but also the quality of the dishes. Red fish, seafood, fruit - a restaurant menu without going to a restaurant!',
+        7.99,
+        '.menu .container'
+      ).render();
+  
+      new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Menu "Vegan"',
+        'The "Fasting" menu is a careful selection of ingredients: total no animal products, milk made from almonds, oats, coconut or buckwheat, the right amount of protein with tofu. and imported vegetarian steaks.',
+        6.5,
+        '.menu .container'
+      ).render();
+      //
 });
