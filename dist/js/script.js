@@ -167,7 +167,49 @@ window.addEventListener('DOMContentLoaded', () => {
   new MenuCard("img/tabs/vegy.jpg", "vegy", 'Menu "Fitness"', '  The menu "Fitness" is a new approach to food preparation: more fresh fruit and vegetables. The product of active and healthy people. This is absolutely new product with optimal price and high quality!', 5.99, '.menu .container').render();
   new MenuCard("img/tabs/elite.jpg", "elite", 'Menu "Premium"', 'In the "Premium" menu we use not only beautiful packaging design,but also the quality of the dishes. Red fish, seafood, fruit - a restaurant menu without going to a restaurant!', 7.99, '.menu .container').render();
   new MenuCard("img/tabs/post.jpg", "post", 'Menu "Vegan"', 'The "Fasting" menu is a careful selection of ingredients: total no animal products, milk made from almonds, oats, coconut or buckwheat, the right amount of protein with tofu. and imported vegetarian steaks.', 6.5, '.menu .container').render();
-  //
+
+  //Forms
+
+  const forms = document.querySelectorAll('form');
+  const message = {
+    loading: "Loading",
+    success: "Thank you! We get touch with you soon",
+    failure: "Somethning went wrong"
+  };
+  forms.forEach(item => {
+    postData(item);
+  });
+  function postData(form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const statusMessage = document.createElement('div');
+      statusMessage.classList.add('status');
+      statusMessage.textContent = message.loading;
+      form.append(statusMessage);
+      const request = new XMLHttpRequest();
+      request.open('POST', 'server.php');
+      request.setRequestHeader('Content-type', 'application/json');
+      const formData = new FormData(form);
+      const object = {};
+      formData.forEach(function (value, key) {
+        object[key] = value;
+      });
+      const json = JSON.stringify(object);
+      request.send(json);
+      request.addEventListener('load', () => {
+        if (request.status === 200) {
+          console.log(request.response);
+          statusMessage.textContent = message.success;
+          form.reset();
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 2000);
+        } else {
+          statusMessage.textContent = message.failure;
+        }
+      });
+    });
+  }
 });
 /******/ })()
 ;
